@@ -1,0 +1,7 @@
+{
+  "name": "backend",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.93.2"
+  }
+}

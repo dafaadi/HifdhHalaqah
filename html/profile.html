@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="icon" type="image/png" href="/resources/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+
+    <section id="pageTopContainer">
+        
+        <a href="/html/leaderboard.html">Leaderboards</a>
+    
+        <section id="profileDetailContainer">
+            <!-- <section id="miniStreakContainer">
+                <img src="/resources/fire.png" alt="" height="50px" width="50px">
+            </section> -->
+            <section id="profileUsername"></section>
+            <img src="" alt="profile image" id="profileImage">
+        </section>
+        
+    </section>
+
+    <section id="profileSettingsContainer">
+        Enter new username: <input type="text" id="usernameField">
+        <button id="changeUsername">Change Username</button>
+        <button id="logoutButton">Logout</button>
+        <button id="closeSettingsButton">Done</button>
+    </section>
+    
+    <section id="entryTableContainer">
+
+        <section class="entryTitleRow">
+            <section class="entryTitle" id="index"></section>
+            <section class="entryTitle" id="entryDescription">Description</section>
+            <section class="entryTitle" id="numberPagesTitle">
+                Number of pages
+                <section id="entrySubTitleContainer">
+                    <section class="entrySubTitle">Memorized</section>
+                    <section class="entrySubTitle">Revised</section>
+                </section>
+            </section>
+            <section class="entryTitle">Consistency Bonus</section>
+            <section class="entryTitle">Date</section>
+            <section class="entryTitle">Tally</section>
+            <section class="entryTitle" id="deleteColumn"></section>
+        </section>
+
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+        <section class="entryRow"></section>
+         <div id="pageToggleRow">
+                <img src="/resources/left-arrow.png" alt="" id="previousButton">
+                <img src="/resources/right.png" alt="" id="nextButton">
+        </div>
+    </section>
+
+    <section id="dataSubmissionContainer">
+
+        Description: <input type="text" id="entryDescriptionInput">
+
+        Enter number of pages memorized today: <input type="text" id="numberPagesMemorizedInput">
+
+        Enter number of pages revised today: <input type="text" id="numberPagesRevisedInput">
+        <button id="sendInput">Submit</button>
+    </section>
+
+    <section id="heatmapAndStreakContainer">
+        <section id="heatmapContainer">
+            <section id="monthTitle"></section>
+            
+            <section id="heatmapDayRow">
+                <section class="heatmapDay">Sat</section>
+                <section class="heatmapDay">Sun</section>
+                <section class="heatmapDay">Mon</section>
+                <section class="heatmapDay">Tue</section>
+                <section class="heatmapDay">Wed</section>
+                <section class="heatmapDay">Thu</section>
+                <section class="heatmapDay">Fri</section>
+            </section>
+            
+            <section id="tileContainer"></section>
+        </section>
+
+
+        <section id="streakContainer">
+            <section> <img src="/resources/fire.png" alt="fire icon" id="fireIcon"> Streak length <p id="streakValue">⠀</p></section>
+            <section> <img src="/resources//ice.png" alt=""> Streak freezes available <p>⠀</p></section>
+
+
+            <section> <img src="/resources/lightning.png" alt=""> Current streak multiplier <p>⠀</p></section>
+            <section>  <img src="/resources/tomorrow.png" alt=""> Next streak multiplier <p>⠀</p></section>            
+
+        </section>
+
+    </section>
+
+    
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script type="module" src="/js/profile.js"> </script>
+</body>
+</html>
