@@ -183,7 +183,6 @@ function renderEntries(data){
     descriptionElement.textContent = entry.description
 
     rowNumber.innerHTML += `<div> ${i+1} </div>`
-    rowNumber.innerHTML += `<div class="descriptionText"> ${entry.description} </div>`
     rowNumber.appendChild(descriptionElement)
     rowNumber.innerHTML += `<div> ${entry.pages_revised} </div>`
     rowNumber.innerHTML += `<div> ${entry.consistency_multiplier} </div>`
