@@ -1,13 +1,26 @@
 import { createClient } from "@supabase/supabase-js"
 
-export async function handler(req, res) {
-    if (req.method !== "GET") {
-      return res.status(405).json({ error: "Only GET allowed" })
-    }
+export async function handler(event) {
+    if (event.method !== "GET") {
+      return {
+        statusCode: 405,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ error: "Only GET allowed" }),
+      }
+  }
   
-    const authHeader = req.headers.authorization
+    const authHeader = event.headers.authorization
     if (!authHeader) {
-      return res.status(401).json({ error: "Missing auth header" })
+      return {
+        statusCode: 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ error: "Missing auth header" }),
+      }
+
     }
   
     const token = authHeader.replace("Bearer ", "")
@@ -24,7 +37,7 @@ export async function handler(req, res) {
       }
     )
   
-    const { cursor, limit = 11 } = req.query
+    const { cursor, limit = 11 } = event.queryStringParameters
 
     let query = supabase
       .from("entries")
@@ -48,8 +61,14 @@ export async function handler(req, res) {
 
     if (error) {
       console.error(error)
-      return res.status(500).json({ error: "Failed to fetch entries" })
-    }
+            return {
+        statusCode: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ error: "Failed to fetch entries" }),
+      }
+  }
 
   return {
     statusCode: 200,

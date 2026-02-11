@@ -7,15 +7,27 @@ const supabase = createClient(
 
 
 
-export async function handler(req, res) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Only POST allowed" })
+export async function handler(event) {
+    if (event.method !== "POST") {
+      return {
+        statusCode: 405,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ error: "Only POST allowed" }),
+      }
     }
 
-    const authHeader = req.headers.authorization
+    const authHeader = event.headers.authorization
 
     if (!authHeader) {
-      return res.status(401).json({ error: "Missing auth header" })
+      return {
+        statusCode: 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ error: "Missing auth header" }),
+      }
     }
 
     const token = authHeader.replace("Bearer ", "")
@@ -27,10 +39,13 @@ export async function handler(req, res) {
     } = await supabase.auth.getUser(token)
 
     if (error || !user) {
-      return res.status(401).json({ error: "Invalid token" })
+      return {
+        statusCode: 401,
+        body: JSON.stringify({ error: "Invalid token" }),
+      }
     }
 
-    const { description, pagesMemorized, pagesRevised} = req.body
+    const { description, pagesMemorized, pagesRevised} = event.body
 
     if (
       !Number.isFinite(pagesMemorized) ||
@@ -38,7 +53,10 @@ export async function handler(req, res) {
       pagesMemorized < 0 ||
       pagesRevised < 0
     ) {
-      return res.status(400).json({ error: "Invalid input values" })
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Invalid input values" }),
+      }
     }
 
      // 🧮 Score logic
@@ -49,7 +67,10 @@ export async function handler(req, res) {
     const safeScore = Math.max(0, Math.min(rawScore, 100))
 
     if (rawScore>100){
-      return res.status(400).json({error: "values inserted are too high"})
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Values inserted are too high" }),
+      }
     }
 
 
@@ -76,10 +97,16 @@ export async function handler(req, res) {
     
     if (entryError) {
     console.error(entryError)
-    return res.status(500).json({ error: "Failed to insert entry" })
+    return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Failed to insert entry" }),
+      }
   }
   
-  res.json({ success: true })
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ success: true }),
+  }
 }
 
 
@@ -95,7 +122,10 @@ async function calculateConsistencyBonus(){
 
     if (error){
         console.error(error)
-        return res.status(500).json({ error: "Failed to fetch entries" })
+        return {
+          statusCode: 500,
+          body: JSON.stringify({ error: "Failed to fetch entries" }),
+        }
     }
 
     const today = new Date().toISOString().slice(0,10)
