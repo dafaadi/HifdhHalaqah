@@ -57,7 +57,8 @@ export async function handler(event) {
     }
 
      // 🧮 Score logic
-    let consistencyBonus = await calculateConsistencyBonus() ?? 0
+    let userId = user.id
+    let consistencyBonus = await calculateConsistencyBonus(userId) ?? 0
     const rawScore = pagesMemorizedNum * 2 + pagesRevisedNum + consistencyBonus
     // let score = ((pagesMemorized*2) + (pagesRevised))
 
@@ -109,7 +110,7 @@ export async function handler(event) {
 
 // function to provide bonus based on streak
 
-async function calculateConsistencyBonus(){
+async function calculateConsistencyBonus(userId){
   
   const current = new Date()
   const firstDay = new Date(current.getFullYear(), current.getMonth(), 1)
@@ -118,7 +119,9 @@ async function calculateConsistencyBonus(){
   const { data, error } = await supabase
   .from("entries")
   .select("created_at")
+  .eq("user_id", userId)
   .gte("created_at", firstDayISO)
+
 
 
   if (error){
