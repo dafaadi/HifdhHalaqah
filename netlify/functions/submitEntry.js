@@ -110,25 +110,29 @@ export async function handler(event) {
 // function to provide bonus based on streak
 
 async function calculateConsistencyBonus(){
+  
+  const current = new Date()
+  const firstDay = new Date(current.getFullYear(), current.getMonth(), 1)
+  const firstDayISO = firstDay.toISOString()
 
   const { data, error } = await supabase
-    .from("entries")
-    .select(`id, created_at`)
-    .order("created_at", { ascending: false })
-    .limit(60)
+  .from("entries")
+  .select("created_at")
+  .gte("created_at", firstDayISO)
 
-    if (error){
-        console.error(error)
-        return {
-          statusCode: 500,
-          body: JSON.stringify({ error: "Failed to fetch entries" }),
-        }
+
+  if (error){
+    console.error(error)
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Failed to fetch entries" }),
     }
+  }
 
-    const today = new Date().toISOString().slice(0,10)
-    const activeDays = new Set(data.map(entry => new Date(entry.created_at).toISOString().slice(0,10)))
-    if (activeDays.has(today)) return
+  const today = new Date().toISOString().slice(0,10)
+  const activeDays = new Set(data.map(entry => new Date(entry.created_at).toISOString().slice(0,10)))
+  if (activeDays.has(today)) return 0 
 
-    const bonus_value = activeDays.size * 2
-    return bonus_value
+  const bonus_value = activeDays.size * 2
+  return bonus_value
 }
