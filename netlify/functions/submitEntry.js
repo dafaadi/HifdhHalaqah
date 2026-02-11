@@ -11,9 +11,6 @@ export async function handler(event) {
     if (event.httpMethod !== "POST") {
       return {
         statusCode: 405,
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ error: "Only POST allowed" }),
       }
     }
@@ -23,9 +20,6 @@ export async function handler(event) {
     if (!authHeader) {
       return {
         statusCode: 401,
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ error: "Missing auth header" }),
       }
     }
@@ -45,7 +39,10 @@ export async function handler(event) {
       }
     }
 
-    const { description, pagesMemorized, pagesRevised} = event.body
+    const body = JSON.parse(event.body)
+    const { description, pagesMemorized, pagesRevised} = body
+    pagesMemorized = Number(pagesMemorized)
+    pagesRevised = Number(pagesRevised)
 
     if (
       !Number.isFinite(pagesMemorized) ||
