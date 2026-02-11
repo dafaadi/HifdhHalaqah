@@ -41,14 +41,14 @@ export async function handler(event) {
 
     const body = JSON.parse(event.body)
     const { description, pagesMemorized, pagesRevised} = body
-    pagesMemorized = Number(pagesMemorized)
-    pagesRevised = Number(pagesRevised)
+    const pagesMemorizedNum = Number(pagesMemorized)
+    const pagesRevisedNum = Number(pagesRevised)
 
     if (
-      !Number.isFinite(pagesMemorized) ||
-      !Number.isFinite(pagesRevised) ||
-      pagesMemorized < 0 ||
-      pagesRevised < 0
+      !Number.isFinite(pagesMemorizedNum) ||
+      !Number.isFinite(pagesRevisedNum) ||
+      pagesMemorizedNum < 0 ||
+      pagesRevisedNum < 0
     ) {
       return {
         statusCode: 400,
@@ -58,7 +58,7 @@ export async function handler(event) {
 
      // 🧮 Score logic
     let consistencyBonus = await calculateConsistencyBonus() ?? 0
-    const rawScore = pagesMemorized * 2 + pagesRevised + consistencyBonus
+    const rawScore = pagesMemorizedNum * 2 + pagesRevisedNum + consistencyBonus
     // let score = ((pagesMemorized*2) + (pagesRevised))
 
     const safeScore = Math.max(0, Math.min(rawScore, 100))
@@ -86,8 +86,8 @@ export async function handler(event) {
     
     const {error: entryError} = await supabaseAuthed.rpc("submit_entry", {
       p_description: description,
-      p_pages_memorized: pagesMemorized,
-      p_pages_revised: pagesRevised,
+      p_pages_memorized: pagesMemorizedNum,
+      p_pages_revised: pagesRevisedNum,
       p_consistency_multiplier: consistencyBonus,
       p_score: safeScore
     })
