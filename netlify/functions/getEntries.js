@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js"
 
 export async function handler(event) {
-    if (event.method !== "GET") {
+    if (event.httpMethod !== "GET") {
       return {
         statusCode: 405,
         headers: {

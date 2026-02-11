@@ -8,7 +8,7 @@ const supabase = createClient(
 
 
 export async function handler(event) {
-    if (event.method !== "POST") {
+    if (event.httpMethod !== "POST") {
       return {
         statusCode: 405,
         headers: {
