@@ -1,11 +1,11 @@
 import { createClient } from "@supabase/supabase-js"
 
-export async function handler(req, res) {
-    if (req.method !== "GET") {
+export async function handler(event) {
+    if (event.method !== "GET") {
       return res.status(405).json({ error: "Only GET allowed" })
     }
   
-    const authHeader = req.headers.authorization
+    const authHeader = event.headers.authorization
     if (!authHeader) {
       return res.status(401).json({ error: "Missing auth header" })
     }
@@ -24,7 +24,7 @@ export async function handler(req, res) {
       }
     )
   
-    const { cursor, limit = 11 } = req.query
+    const { cursor, limit = 11 } = event.queryStringParameters
 
     let query = supabase
       .from("entries")
