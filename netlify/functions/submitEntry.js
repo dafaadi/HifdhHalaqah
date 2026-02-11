@@ -7,12 +7,12 @@ const supabase = createClient(
 
 
 
-export async function handler(event) {
-    if (event.method !== "POST") {
+export async function handler(req, res) {
+    if (req.method !== "POST") {
         return res.status(405).json({ error: "Only POST allowed" })
     }
 
-    const authHeader = event.headers.authorization
+    const authHeader = req.headers.authorization
 
     if (!authHeader) {
       return res.status(401).json({ error: "Missing auth header" })
@@ -30,7 +30,7 @@ export async function handler(event) {
       return res.status(401).json({ error: "Invalid token" })
     }
 
-    const { description, pagesMemorized, pagesRevised} = event.body
+    const { description, pagesMemorized, pagesRevised} = req.body
 
     if (
       !Number.isFinite(pagesMemorized) ||

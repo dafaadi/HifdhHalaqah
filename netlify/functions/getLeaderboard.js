@@ -5,7 +5,7 @@ const supabase = createClient(
   process.env.SUPABASE_SECRET_KEY
 )
 
-export async function handler(event) {
+export async function handler(req, res) {
   const { data } = await supabase
     .from("scores")
     .select("total_score, profiles(display_name)")
