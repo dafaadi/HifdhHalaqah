@@ -140,7 +140,7 @@ async function populateEntries(){
     console.err("not authenticated!")
   }
 
-  const res = await fetch("/.netlify/functions/getEntries?limit=11", {
+  const res = await fetch("/netlify/functions/getEntries?limit=11", {
     headers: {
       Authorization: `Bearer ${session.access_token}`
     }
@@ -243,7 +243,7 @@ document.querySelector("#nextButton").addEventListener("click", async ()=>  {
   let res
 
   try {
-    res = await fetch(`/.netlify/functions/getEntries?limit=11&cursor=${encodeURIComponent(cursor)}`,
+    res = await fetch(`/netlify/functions/getEntries?limit=11&cursor=${encodeURIComponent(cursor)}`,
     {
       headers: {
         Authorization: `Bearer ${session.access_token}`
@@ -291,8 +291,8 @@ document.querySelector("#previousButton").addEventListener("click", async ()=>  
   try {
     res = await fetch(
       cursor ? 
-      `/.netlify/functions/getEntries?limit=11&cursor=${encodeURIComponent(cursor)}`
-      : `/.netlify/functions/getEntries?limit=11`,
+      `/netlify/functions/getEntries?limit=11&cursor=${encodeURIComponent(cursor)}`
+      : `/netlify/functions/getEntries?limit=11`,
     {
       headers: {
         Authorization: `Bearer ${session.access_token}`
@@ -402,7 +402,7 @@ export async function submitEntry(description, pagesMemorized, pagesRevised) {
       throw new Error("Not authenticated")
     }
 
-    const res = await fetch("/.netlify/functions/submitEntry", {
+    const res = await fetch("/netlify/functions/submitEntry", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

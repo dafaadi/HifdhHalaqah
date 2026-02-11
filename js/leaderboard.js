@@ -1,6 +1,6 @@
 let lbContainer = document.querySelector("#leaderboardContainer")
 
-fetch("/.netlify/functions/getLeaderboard").then(r => r.json()).then(data => {
+fetch("/netlify/functions/getLeaderboard").then(r => r.json()).then(data => {
     let leaderboardData = data
     console.log(data)
 
