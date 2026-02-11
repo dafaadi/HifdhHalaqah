@@ -130,8 +130,13 @@ async function calculateConsistencyBonus(){
   }
 
   const today = new Date().toISOString().slice(0,10)
+  console.log(today)
   const activeDays = new Set(data.map(entry => new Date(entry.created_at).toISOString().slice(0,10)))
-  if (activeDays.has(today)) return 0 
+  console.log(activeDays)
+  if (activeDays.has(today)) {
+    console.log((activeDays.has(today)))
+    return 0 
+  }
 
   const bonus_value = activeDays.size * 2
   return bonus_value
