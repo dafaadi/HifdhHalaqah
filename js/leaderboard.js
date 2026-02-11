@@ -8,10 +8,14 @@ fetch("/.netlify/functions/getLeaderboard").then(r => r.json()).then(data => {
         let row = document.createElement("section")
         row.classList.add("dataRow")
 
-        row.innerHTML += `
-        <section class="lbData">${data.rank}</section> 
-        <section class="lbData">${data.username}</section> 
-        <section class="lbData">${data.score}</section> `
+        for(let i=0; i<3; i++){
+            const rowElement = document.createElement("div")
+            rowElement.classList.add("lbData")
+            if (i==0) rowElement.textContent = data.rank
+            if (i==1) rowElement.textContent = data.username
+            if (i==2) rowElement.textContent = data.score
+            row.appendChild(rowElement) 
+        }
         
         if (index==0) Array.from(row.children).forEach(rowChild => rowChild.classList.add("firstRowChild"))
         if (index==1) Array.from(row.children).forEach(rowChild => rowChild.classList.add("secondRowChild"))
