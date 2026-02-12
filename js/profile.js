@@ -133,6 +133,9 @@ const previousButton = document.querySelector("#previousButton")
 
 
 async function populateEntries(){
+  cursor = null
+  cursorHistory = []
+  
   console.log("grabbing entry data")
   const session = (await supabase.auth.getSession()).data.session
 
@@ -454,6 +457,7 @@ document.querySelector("#sendInput").addEventListener("click", async () => {
     try {
         await submitEntry(entryDescription, numberOfPagesMemorized, numberOfPagesRevised)
         console.log("score submitted successfully")
+        previousButton.style.display = "none"
     }
     catch (err) {
         console.error("failed to submit entry:", err)
