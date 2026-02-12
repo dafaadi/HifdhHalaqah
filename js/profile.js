@@ -184,6 +184,7 @@ function renderEntries(data){
 
     rowNumber.innerHTML += `<div> ${i+1} </div>`
     rowNumber.appendChild(descriptionElement)
+    rowNumber.innerHTML += `<div> ${entry.pages_memorized} </div>`
     rowNumber.innerHTML += `<div> ${entry.pages_revised} </div>`
     rowNumber.innerHTML += `<div> ${entry.consistency_multiplier} </div>`
     rowNumber.innerHTML += `<div> ${createdAt} </div>`
